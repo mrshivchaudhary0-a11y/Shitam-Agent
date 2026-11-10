@@ -4,158 +4,855 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d18">
+<meta name="description" content="SHITAM INTEL X - Public Source Intelligence Platform">
+<link rel="manifest" href="./manifest.json">
 <title>SHITAM INTEL X</title>
+
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+ --bg:#080d18;
+ --panel:#111c30;
+ --panel2:#172943;
+ --cyan:#36d9ed;
+ --blue:#668cff;
+ --text:#edf5ff;
+ --muted:#91a5c2;
+ --border:#263b59;
+}
+
 body{
- margin:0;background:#080d18;color:#eaf3ff;
- font-family:Arial,sans-serif;padding:20px
+ background:var(--bg);
+ color:var(--text);
+ font-family:Arial, sans-serif;
+ min-height:100vh;
 }
-header{text-align:center;padding:25px}
-header h1{color:#36d9ed;letter-spacing:3px}
-header p{color:#8da6c7}
-.container{max-width:900px;margin:auto}
-.panel{
- background:#111c30;border:1px solid #263b59;
- padding:20px;border-radius:15px;margin:15px 0
+
+header{
+ padding:22px;
+ text-align:center;
+ background:linear-gradient(120deg,#101d35,#102c43);
+ border-bottom:1px solid var(--border);
 }
+
+.logo{
+ font-size:30px;
+ font-weight:900;
+ letter-spacing:3px;
+ color:var(--cyan);
+}
+
+.subtitle{
+ color:var(--muted);
+ font-size:11px;
+ letter-spacing:3px;
+ margin-top:7px;
+}
+
+.container{
+ max-width:1150px;
+ margin:auto;
+ padding:20px;
+}
+
+.hero{
+ padding:25px;
+ border:1px solid var(--border);
+ border-radius:18px;
+ background:linear-gradient(120deg,#142a45,#101a2d);
+ margin-bottom:20px;
+}
+
+.hero h2{
+ font-size:27px;
+ margin-bottom:10px;
+}
+
+.hero p{
+ color:var(--muted);
+ line-height:1.6;
+}
+
+.stats{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+ margin-top:20px;
+}
+
+.stat{
+ background:#0a1526;
+ border:1px solid var(--border);
+ padding:15px;
+ border-radius:12px;
+ text-align:center;
+}
+
+.stat b{
+ display:block;
+ font-size:23px;
+ color:var(--cyan);
+}
+
+.stat span{
+ color:var(--muted);
+ font-size:11px;
+}
+
+.layout{
+ display:grid;
+ grid-template-columns:240px 1fr;
+ gap:18px;
+}
+
+.sidebar,.workspace{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:16px;
+ padding:18px;
+}
+
+.sidebar h3{
+ color:var(--muted);
+ font-size:12px;
+ letter-spacing:2px;
+ margin-bottom:12px;
+}
+
+.nav{
+ display:block;
+ width:100%;
+ text-align:left;
+ padding:13px;
+ margin:5px 0;
+ border:0;
+ border-radius:9px;
+ color:#c7d6eb;
+ background:transparent;
+ cursor:pointer;
+ font-size:14px;
+}
+
+.nav:hover,.nav.active{
+ background:#1c3452;
+ color:var(--cyan);
+}
+
+.nav span{
+ margin-right:10px;
+}
+
+.section-title{
+ font-size:22px;
+ margin-bottom:7px;
+}
+
+.section-desc{
+ color:var(--muted);
+ font-size:13px;
+ margin-bottom:20px;
+}
+
+.searchbox{
+ background:#0a1424;
+ padding:17px;
+ border:1px solid var(--border);
+ border-radius:13px;
+}
+
+label{
+ display:block;
+ font-size:12px;
+ color:#b8c9df;
+ margin-bottom:9px;
+}
+
 input,select{
- width:100%;padding:14px;margin:10px 0;
- border-radius:8px;border:1px solid #38506e;
- background:#081322;color:white
+ width:100%;
+ padding:14px;
+ border-radius:9px;
+ border:1px solid #344d6b;
+ background:#080f1b;
+ color:white;
+ margin-bottom:12px;
+ outline:none;
+ font-size:14px;
 }
+
+input:focus,select:focus{
+ border-color:var(--cyan);
+}
+
 button{
- background:#36d9ed;color:#06111c;
- padding:13px 20px;border:0;border-radius:8px;
- font-weight:bold;cursor:pointer
+ cursor:pointer;
 }
-.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+
+.primary{
+ width:100%;
+ border:0;
+ padding:14px;
+ border-radius:9px;
+ color:#07111c;
+ font-weight:bold;
+ background:linear-gradient(110deg,var(--cyan),var(--blue));
+}
+
+.primary:hover{
+ filter:brightness(1.12);
+}
+
+.results{
+ margin-top:17px;
+ display:none;
+}
+
+.results.show{
+ display:block;
+}
+
+.result-card{
+ padding:15px;
+ margin-top:10px;
+ background:#0b1627;
+ border:1px solid var(--border);
+ border-radius:11px;
+ overflow-wrap:anywhere;
+}
+
+.result-card h3{
+ font-size:15px;
+ margin-bottom:8px;
+}
+
+.result-card p{
+ font-size:13px;
+ color:var(--muted);
+ line-height:1.6;
+}
+
+.result-links{
+ display:flex;
+ flex-wrap:wrap;
+ gap:9px;
+ margin-top:13px;
+}
+
+.result-links a{
+ color:var(--cyan);
+ text-decoration:none;
+ border:1px solid #28516a;
+ padding:9px 11px;
+ border-radius:8px;
+ font-size:12px;
+}
+
+.result-links a:hover{
+ background:#18334a;
+}
+
+.modules{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:13px;
+ margin-top:20px;
+}
+
+.module{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:13px;
+ padding:18px;
+ cursor:pointer;
+ transition:.2s;
+}
+
+.module:hover{
+ transform:translateY(-3px);
+ border-color:var(--cyan);
+}
+
+.module .icon{
+ font-size:25px;
+}
+
+.module h3{
+ font-size:14px;
+ margin:10px 0 5px;
+}
+
+.module p{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.5;
+}
+
+.notice{
+ padding:14px;
+ border-left:3px solid #ffc56b;
+ background:#282114;
+ color:#e1c99c;
+ border-radius:8px;
+ font-size:12px;
+ line-height:1.6;
+ margin-top:20px;
+}
+
 .tool{
- background:#172943;padding:18px;border-radius:10px;
- cursor:pointer;border:1px solid #294664
+ display:none;
 }
-.tool:hover{border-color:#36d9ed}
-#result{color:#b6c9e4;overflow-wrap:anywhere}
-footer{text-align:center;color:#7188a8;padding:25px}
-@media(max-width:550px){.tools{grid-template-columns:1fr}}
+
+.tool.active{
+ display:block;
+}
+
+.footer{
+ text-align:center;
+ color:#7188a8;
+ padding:25px;
+ font-size:12px;
+}
+
+#installBtn{
+ display:none;
+ margin:12px auto 0;
+ max-width:220px;
+}
+
+@media(max-width:750px){
+ .layout{grid-template-columns:1fr}
+ .sidebar{
+  display:flex;
+  overflow-x:auto;
+  gap:5px;
+  padding:9px;
+ }
+ .sidebar h3{display:none}
+ .nav{
+  white-space:nowrap;
+  width:auto;
+  padding:11px;
+ }
+ .modules{grid-template-columns:repeat(2,1fr)}
+ .hero h2{font-size:23px}
+}
+
+@media(max-width:420px){
+ .container{padding:12px}
+ .modules{grid-template-columns:1fr}
+ .stats{gap:6px}
+ .stat{padding:10px 5px}
+ .stat b{font-size:18px}
+ .stat span{font-size:9px}
+}
 </style>
 </head>
+
 <body>
+
 <header>
-<h1>SHITAM INTEL X</h1>
-<p>ADVANCED OPEN SOURCE INTELLIGENCE</p>
+ <div class="logo">SHITAM INTEL X</div>
+ <div class="subtitle">OPEN SOURCE INTELLIGENCE PLATFORM</div>
+ <button class="primary" id="installBtn">INSTALL APP</button>
 </header>
 
 <div class="container">
-<div class="panel">
-<h2>🔍 Intelligence Search</h2>
-<select id="type">
-<option value="phone">Phone Number</option>
-<option value="email">Email / Domain</option>
-<option value="username">Username</option>
-<option value="ip">IP Address</option>
-<option value="domain">Website Domain</option>
-</select>
-<input id="query" placeholder="Enter your search query">
-<button onclick="search()">START SEARCH</button>
-<div id="result"></div>
+
+<section class="hero">
+ <h2>Welcome to SHITAM INTEL X</h2>
+ <p>
+ Advanced public-source research workspace.
+ Search public web information, inspect domains,
+ research usernames and explore network metadata.
+ </p>
+
+ <div class="stats">
+  <div class="stat">
+   <b>06</b>
+   <span>SEARCH MODULES</span>
+  </div>
+  <div class="stat">
+   <b>24/7</b>
+   <span>LOCAL DASHBOARD</span>
+  </div>
+  <div class="stat">
+   <b>v0.3</b>
+   <span>PLATFORM VERSION</span>
+  </div>
+ </div>
+</section>
+
+<div class="layout">
+
+<aside class="sidebar">
+ <h3>INTELLIGENCE TOOLS</h3>
+
+ <button class="nav active" data-tool="phone">
+  <span>📱</span> Phone Intelligence
+ </button>
+
+ <button class="nav" data-tool="email">
+  <span>✉️</span> Email Intelligence
+ </button>
+
+ <button class="nav" data-tool="username">
+  <span>👤</span> Username Search
+ </button>
+
+ <button class="nav" data-tool="ip">
+  <span>🌐</span> IP Intelligence
+ </button>
+
+ <button class="nav" data-tool="domain">
+  <span>🔗</span> Domain Intelligence
+ </button>
+
+ <button class="nav" data-tool="image">
+  <span>🖼️</span> Image Research
+ </button>
+</aside>
+
+<main class="workspace">
+
+<!-- PHONE -->
+
+<section class="tool active" id="phone">
+ <h2 class="section-title">Phone Intelligence</h2>
+ <p class="section-desc">
+ Basic phone format and public web research.
+ </p>
+
+ <div class="searchbox">
+  <label>PHONE NUMBER WITH COUNTRY CODE</label>
+  <input id="phoneInput" placeholder="+91 9876543210">
+  <button class="primary" onclick="phoneSearch()">
+   ANALYZE PHONE
+  </button>
+ </div>
+
+ <div class="results" id="phoneResult"></div>
+</section>
+
+<!-- EMAIL -->
+
+<section class="tool" id="email">
+ <h2 class="section-title">Email Intelligence</h2>
+ <p class="section-desc">
+ Inspect email domains using public services.
+ </p>
+
+ <div class="searchbox">
+  <label>EMAIL ADDRESS OR DOMAIN</label>
+  <input id="emailInput" placeholder="example@gmail.com">
+  <button class="primary" onclick="emailSearch()">
+   ANALYZE EMAIL
+  </button>
+ </div>
+
+ <div class="results" id="emailResult"></div>
+</section>
+
+<!-- USERNAME -->
+
+<section class="tool" id="username">
+ <h2 class="section-title">Username Intelligence</h2>
+ <p class="section-desc">
+ Search publicly indexed username information.
+ </p>
+
+ <div class="searchbox">
+  <label>USERNAME</label>
+  <input id="usernameInput" placeholder="Enter username">
+  <button class="primary" onclick="usernameSearch()">
+   SEARCH USERNAME
+  </button>
+ </div>
+
+ <div class="results" id="usernameResult"></div>
+</section>
+
+<!-- IP -->
+
+<section class="tool" id="ip">
+ <h2 class="section-title">IP Intelligence</h2>
+ <p class="section-desc">
+ Public network registration and reputation lookup.
+ </p>
+
+ <div class="searchbox">
+  <label>IP ADDRESS</label>
+  <input id="ipInput" placeholder="8.8.8.8">
+  <button class="primary" onclick="ipSearch()">
+   ANALYZE IP
+  </button>
+ </div>
+
+ <div class="results" id="ipResult"></div>
+</section>
+
+<!-- DOMAIN -->
+
+<section class="tool" id="domain">
+ <h2 class="section-title">Domain Intelligence</h2>
+ <p class="section-desc">
+ Research website registration, DNS and reputation.
+ </p>
+
+ <div class="searchbox">
+  <label>WEBSITE DOMAIN</label>
+  <input id="domainInput" placeholder="example.com">
+  <button class="primary" onclick="domainSearch()">
+   INVESTIGATE DOMAIN
+  </button>
+ </div>
+
+ <div class="results" id="domainResult"></div>
+</section>
+
+<!-- IMAGE -->
+
+<section class="tool" id="image">
+ <h2 class="section-title">Image Research</h2>
+ <p class="section-desc">
+ Reverse image research using public search engines.
+ </p>
+
+ <div class="result-card">
+  <h3>Image Search Engines</h3>
+  <p>
+   Upload an image directly to a search provider.
+   This website does not store your image.
+  </p>
+
+  <div class="result-links">
+   <a href="https://lens.google.com/"
+      target="_blank" rel="noopener noreferrer">
+      Google Lens ↗
+   </a>
+
+   <a href="https://tineye.com/"
+      target="_blank" rel="noopener noreferrer">
+      TinEye ↗
+   </a>
+
+   <a href="https://www.bing.com/visualsearch"
+      target="_blank" rel="noopener noreferrer">
+      Bing Visual Search ↗
+   </a>
+  </div>
+ </div>
+</section>
+
+</main>
 </div>
 
-<h2>INTELLIGENCE MODULES</h2>
-<div class="tools">
-<div class="tool" onclick="setType('phone')">📱 Phone Intelligence</div>
-<div class="tool" onclick="setType('email')">✉️ Email Intelligence</div>
-<div class="tool" onclick="setType('username')">👤 Username Search</div>
-<div class="tool" onclick="setType('ip')">🌐 IP Intelligence</div>
-<div class="tool" onclick="setType('domain')">🔗 Domain Intelligence</div>
-<div class="tool" onclick="window.open('https://lens.google.com/','_blank')">🖼️ Image Research</div>
+<h2 style="margin-top:25px">QUICK ACCESS MODULES</h2>
+
+<div class="modules">
+
+<div class="module" onclick="openTool('phone')">
+ <div class="icon">📱</div>
+ <h3>Phone Search</h3>
+ <p>Phone format and public web lookup.</p>
 </div>
 
-<div class="panel">
-<h3>About SHITAM INTEL X</h3>
-<p>Public-source intelligence research dashboard.
-This platform uses public lookup services and does not
-access private databases or confidential personal records.</p>
-</div>
+<div class="module" onclick="openTool('email')">
+ <div class="icon">✉️</div>
+ <h3>Email Search</h3>
+ <p>Domain and email security research.</p>
 </div>
 
-<footer>SHITAM INTEL X © 2026 | VERSION 0.2</footer>
+<div class="module" onclick="openTool('username')">
+ <div class="icon">👤</div>
+ <h3>Username Search</h3>
+ <p>Public profile and web search.</p>
+</div>
+
+<div class="module" onclick="openTool('ip')">
+ <div class="icon">🌐</div>
+ <h3>IP Lookup</h3>
+ <p>Network registration information.</p>
+</div>
+
+<div class="module" onclick="openTool('domain')">
+ <div class="icon">🔗</div>
+ <h3>Website Search</h3>
+ <p>DNS, WHOIS and reputation links.</p>
+</div>
+
+<div class="module" onclick="openTool('image')">
+ <div class="icon">🖼️</div>
+ <h3>Image Search</h3>
+ <p>Reverse image search providers.</p>
+</div>
+
+</div>
+
+<div class="notice">
+ <b>PRIVACY & SAFETY NOTICE</b><br>
+ This is a public-source research dashboard.
+ It does not access private databases, reveal private
+ addresses, identify anonymous people, or track live
+ personal locations. Third-party lookup results must
+ be independently verified.
+</div>
+
+</div>
+
+<footer class="footer">
+ SHITAM INTEL X © 2026
+ <br>OPEN SOURCE INTELLIGENCE · VERSION 0.3
+</footer>
 
 <script>
-function setType(t){
- document.getElementById("type").value=t;
- document.getElementById("query").focus();
+
+// NAVIGATION
+
+function openTool(name){
+ document.querySelectorAll(".tool").forEach(el=>{
+  el.classList.remove("active");
+ });
+
+ document.querySelectorAll(".nav").forEach(el=>{
+  el.classList.toggle("active",el.dataset.tool===name);
+ });
+
+ const section=document.getElementById(name);
+ if(section) section.classList.add("active");
 }
-function search(){
- let type=document.getElementById("type").value;
- let q=document.getElementById("query").value.trim();
- let r=document.getElementById("result");
 
- if(!q){r.innerHTML="Please enter a search query.";return;}
+document.querySelectorAll(".nav").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  openTool(btn.dataset.tool);
+ });
+});
 
- let safe=encodeURIComponent(q);
- let links=[];
+// SAFE RESULT BUILDER
 
- if(type==="phone"){
-  if(!/^\+?[0-9\s()-]{7,20}$/.test(q)){
-   r.textContent="Enter a valid-looking phone number.";return;
-  }
-  links=[
-   ["Google Search","https://www.google.com/search?q="+safe],
-   ["Country code reference","https://en.wikipedia.org/wiki/List_of_country_calling_codes"]
-  ];
- }
- if(type==="email"){
-  let d=q.includes("@")?q.split("@").pop():q;
-  if(!/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(d)){
-   r.textContent="Enter a valid email or domain.";return;
-  }
-  links=[
-   ["DNS Lookup","https://dns.google/"],
-   ["WHOIS","https://who.is/whois/"+encodeURIComponent(d)],
-   ["VirusTotal","https://www.virustotal.com/gui/domain/"+encodeURIComponent(d)]
-  ];
- }
- if(type==="username"){
-  links=[
-   ["Google","https://www.google.com/search?q="+safe],
-   ["Bing","https://www.bing.com/search?q="+safe],
-   ["GitHub","https://github.com/"+safe],
-   ["Reddit","https://www.reddit.com/search/?q="+safe]
-  ];
- }
- if(type==="ip"){
-  if(!/^[0-9a-fA-F:.]+$/.test(q)){
-   r.textContent="Enter a valid-looking IP address.";return;
-  }
-  links=[
-   ["RDAP","https://rdap.org/ip/"+safe],
-   ["IP Information","https://ipinfo.io/"+safe],
-   ["VirusTotal","https://www.virustotal.com/gui/ip-address/"+safe]
-  ];
- }
- if(type==="domain"){
-  let d=q.replace(/^https?:\/\//,"").split("/")[0];
-  if(!/^(?=.{1,253}$)([a-z0-9-]+\.)+[a-z]{2,}$/i.test(d)){
-   r.textContent="Enter a valid domain.";return;
-  }
-  links=[
-   ["WHOIS","https://who.is/whois/"+encodeURIComponent(d)],
-   ["DNS Lookup","https://dns.google/query?name="+encodeURIComponent(d)],
-   ["Certificate Search","https://crt.sh/?q="+encodeURIComponent(d)],
-   ["VirusTotal","https://www.virustotal.com/gui/domain/"+encodeURIComponent(d)]
-  ];
+function showResults(id,title,message,links){
+ const box=document.getElementById(id);
+ box.replaceChildren();
+ box.classList.add("show");
+
+ const card=document.createElement("div");
+ card.className="result-card";
+
+ const heading=document.createElement("h3");
+ heading.textContent=title;
+
+ const paragraph=document.createElement("p");
+ paragraph.textContent=message;
+
+ const linkBox=document.createElement("div");
+ linkBox.className="result-links";
+
+ links.forEach(item=>{
+  const a=document.createElement("a");
+  a.textContent=item.name+" ↗";
+  a.href=item.url;
+  a.target="_blank";
+  a.rel="noopener noreferrer";
+  linkBox.appendChild(a);
+ });
+
+ card.append(heading,paragraph,linkBox);
+ box.appendChild(card);
+}
+
+function invalid(id,message){
+ const box=document.getElementById(id);
+ box.replaceChildren();
+ box.classList.add("show");
+
+ const p=document.createElement("p");
+ p.textContent=message;
+ p.style.color="#ffc56b";
+ box.appendChild(p);
+}
+
+function encode(value){
+ return encodeURIComponent(value);
+}
+
+// PHONE SEARCH
+
+function phoneSearch(){
+ const value=document.getElementById("phoneInput").value.trim();
+ const digits=value.replace(/\D/g,"");
+
+ if(digits.length<7||digits.length>15){
+  invalid("phoneResult","Enter a phone number with 7 to 15 digits.");
+  return;
  }
 
- r.innerHTML="<h3>Public Search Sources</h3>";
- links.forEach(x=>{
-  let a=document.createElement("a");
-  a.href=x[1];a.target="_blank";a.rel="noopener noreferrer";
-  a.textContent=x[0]+" ↗";
-  a.style="display:inline-block;color:#36d9ed;margin:8px;";
-  r.appendChild(a);
+ let country="Country prefix not recognized";
+
+ if(value.startsWith("+91")) country="India (+91)";
+ else if(value.startsWith("+1")) country="USA / Canada (+1)";
+ else if(value.startsWith("+44")) country="United Kingdom (+44)";
+ else if(value.startsWith("+971")) country="UAE (+971)";
+ else if(value.startsWith("+61")) country="Australia (+61)";
+
+ showResults(
+  "phoneResult",
+  "Phone Format Analysis",
+  "Number length: "+digits.length+
+  " digits. Country prefix: "+country+
+  ". This is only a basic format check, not a verified identity lookup.",
+  [
+   {name:"Google Public Search",
+    url:"https://www.google.com/search?q="+encode(value)}
+  ]
+ );
+}
+
+// EMAIL SEARCH
+
+function emailSearch(){
+ const value=document.getElementById("emailInput").value.trim();
+ const domain=value.includes("@")?value.split("@").pop():value;
+ const d=domain.toLowerCase();
+
+ if(!/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(d)){
+  invalid("emailResult","Enter a valid email address or domain.");
+  return;
+ }
+
+ showResults(
+  "emailResult",
+  "Email Domain Research",
+  "Domain selected: "+d+
+  ". Public DNS and domain reputation services are available below.",
+  [
+   {name:"WHOIS",url:"https://who.is/whois/"+encode(d)},
+   {name:"VirusTotal",url:"https://www.virustotal.com/gui/domain/"+encode(d)},
+   {name:"Google DNS",url:"https://dns.google/query?name="+encode(d)},
+   {name:"Google Search",url:"https://www.google.com/search?q="+encode(d)}
+  ]
+ );
+}
+
+// USERNAME SEARCH
+
+function usernameSearch(){
+ const value=document.getElementById("usernameInput").value.trim().replace(/^@/,"");
+
+ if(!/^[a-zA-Z0-9._-]{2,40}$/.test(value)){
+  invalid("usernameResult","Enter a username with 2 to 40 valid characters.");
+  return;
+ }
+
+ const q=encode(value);
+
+ showResults(
+  "usernameResult",
+  "Public Username Search",
+  "Searching publicly indexed information for: @"+value+
+  ". A matching username does not prove account ownership.",
+  [
+   {name:"Google",url:"https://www.google.com/search?q="+q},
+   {name:"Bing",url:"https://www.bing.com/search?q="+q},
+   {name:"GitHub",url:"https://github.com/"+q},
+   {name:"Reddit",url:"https://www.reddit.com/search/?q="+q}
+  ]
+ );
+}
+
+// IP SEARCH
+
+function ipSearch(){
+ const value=document.getElementById("ipInput").value.trim();
+
+ const ipv4=/^(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)$/;
+ const ipv6=/^[0-9a-fA-F:]+$/.test(value)&&value.includes(":");
+
+ if(!ipv4&&!ipv6){
+  invalid("ipResult","Enter a valid-looking IPv4 or IPv6 address.");
+  return;
+ }
+
+ const q=encode(value);
+
+ showResults(
+  "ipResult",
+  "IP Network Research",
+  "IP selected: "+value+
+  ". Public registration and reputation sources are listed below. Geolocation is approximate, not live tracking.",
+  [
+   {name:"RDAP",url:"https://rdap.org/ip/"+q},
+   {name:"IP Information",url:"https://ipinfo.io/"+q},
+   {name:"VirusTotal",url:"https://www.virustotal.com/gui/ip-address/"+q}
+  ]
+ );
+}
+
+// DOMAIN SEARCH
+
+function domainSearch(){
+ let value=document.getElementById("domainInput").value.trim();
+ value=value.replace(/^https?:\/\//,"").split("/")[0].split(":")[0];
+
+ if(!/^(?=.{1,253}$)([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i.test(value)){
+  invalid("domainResult","Enter a valid domain such as example.com.");
+  return;
+ }
+
+ const q=encode(value);
+
+ showResults(
+  "domainResult",
+  "Domain Intelligence",
+  "Domain selected: "+value+
+  ". Use these public sources for registration, DNS, certificates and reputation research.",
+  [
+   {name:"WHOIS",url:"https://who.is/whois/"+q},
+   {name:"DNS Lookup",url:"https://dns.google/query?name="+q},
+   {name:"Certificate Search",url:"https://crt.sh/?q="+q},
+   {name:"VirusTotal",url:"https://www.virustotal.com/gui/domain/"+q},
+   {name:"URLScan",url:"https://urlscan.io/search/#domain:"+q}
+  ]
+ );
+}
+
+// PWA INSTALL
+
+let installPrompt=null;
+
+const installBtn=document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt",event=>{
+ event.preventDefault();
+ installPrompt=event;
+ installBtn.style.display="block";
+});
+
+installBtn.addEventListener("click",async()=>{
+ if(!installPrompt)return;
+
+ installPrompt.prompt();
+ await installPrompt.userChoice;
+
+ installPrompt=null;
+ installBtn.style.display="none";
+});
+
+window.addEventListener("appinstalled",()=>{
+ installBtn.style.display="none";
+});
+
+// SERVICE WORKER
+
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("./sw.js")
+   .catch(error=>{
+    console.log("Service worker registration failed:",error);
+   });
  });
 }
+
 </script>
+
 </body>
 </html>
