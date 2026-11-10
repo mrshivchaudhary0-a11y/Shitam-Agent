@@ -1,0 +1,13 @@
+
+{
+  "name": "SHITAM INTEL X",
+  "short_name": "INTEL X",
+  "description": "Open Source Intelligence Research Platform",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#080d18",
+  "theme_color": "#080d18",
+  "categories": ["security", "utilities", "productivity"]
+}
