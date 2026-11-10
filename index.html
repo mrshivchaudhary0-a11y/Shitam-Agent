@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHITAM INTEL X</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#080d18;color:#eaf3ff;
+ font-family:Arial,sans-serif;padding:20px
+}
+header{text-align:center;padding:25px}
+header h1{color:#36d9ed;letter-spacing:3px}
+header p{color:#8da6c7}
+.container{max-width:900px;margin:auto}
+.panel{
+ background:#111c30;border:1px solid #263b59;
+ padding:20px;border-radius:15px;margin:15px 0
+}
+input,select{
+ width:100%;padding:14px;margin:10px 0;
+ border-radius:8px;border:1px solid #38506e;
+ background:#081322;color:white
+}
+button{
+ background:#36d9ed;color:#06111c;
+ padding:13px 20px;border:0;border-radius:8px;
+ font-weight:bold;cursor:pointer
+}
+.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tool{
+ background:#172943;padding:18px;border-radius:10px;
+ cursor:pointer;border:1px solid #294664
+}
+.tool:hover{border-color:#36d9ed}
+#result{color:#b6c9e4;overflow-wrap:anywhere}
+footer{text-align:center;color:#7188a8;padding:25px}
+@media(max-width:550px){.tools{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<h1>SHITAM INTEL X</h1>
+<p>ADVANCED OPEN SOURCE INTELLIGENCE</p>
+</header>
+
+<div class="container">
+<div class="panel">
+<h2>🔍 Intelligence Search</h2>
+<select id="type">
+<option value="phone">Phone Number</option>
+<option value="email">Email / Domain</option>
+<option value="username">Username</option>
+<option value="ip">IP Address</option>
+<option value="domain">Website Domain</option>
+</select>
+<input id="query" placeholder="Enter your search query">
+<button onclick="search()">START SEARCH</button>
+<div id="result"></div>
+</div>
+
+<h2>INTELLIGENCE MODULES</h2>
+<div class="tools">
+<div class="tool" onclick="setType('phone')">📱 Phone Intelligence</div>
+<div class="tool" onclick="setType('email')">✉️ Email Intelligence</div>
+<div class="tool" onclick="setType('username')">👤 Username Search</div>
+<div class="tool" onclick="setType('ip')">🌐 IP Intelligence</div>
+<div class="tool" onclick="setType('domain')">🔗 Domain Intelligence</div>
+<div class="tool" onclick="window.open('https://lens.google.com/','_blank')">🖼️ Image Research</div>
+</div>
+
+<div class="panel">
+<h3>About SHITAM INTEL X</h3>
+<p>Public-source intelligence research dashboard.
+This platform uses public lookup services and does not
+access private databases or confidential personal records.</p>
+</div>
+</div>
+
+<footer>SHITAM INTEL X © 2026 | VERSION 0.2</footer>
+
+<script>
+function setType(t){
+ document.getElementById("type").value=t;
+ document.getElementById("query").focus();
+}
+function search(){
+ let type=document.getElementById("type").value;
+ let q=document.getElementById("query").value.trim();
+ let r=document.getElementById("result");
+
+ if(!q){r.innerHTML="Please enter a search query.";return;}
+
+ let safe=encodeURIComponent(q);
+ let links=[];
+
+ if(type==="phone"){
+  if(!/^\+?[0-9\s()-]{7,20}$/.test(q)){
+   r.textContent="Enter a valid-looking phone number.";return;
+  }
+  links=[
+   ["Google Search","https://www.google.com/search?q="+safe],
+   ["Country code reference","https://en.wikipedia.org/wiki/List_of_country_calling_codes"]
+  ];
+ }
+ if(type==="email"){
+  let d=q.includes("@")?q.split("@").pop():q;
+  if(!/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(d)){
+   r.textContent="Enter a valid email or domain.";return;
+  }
+  links=[
+   ["DNS Lookup","https://dns.google/"],
+   ["WHOIS","https://who.is/whois/"+encodeURIComponent(d)],
+   ["VirusTotal","https://www.virustotal.com/gui/domain/"+encodeURIComponent(d)]
+  ];
+ }
+ if(type==="username"){
+  links=[
+   ["Google","https://www.google.com/search?q="+safe],
+   ["Bing","https://www.bing.com/search?q="+safe],
+   ["GitHub","https://github.com/"+safe],
+   ["Reddit","https://www.reddit.com/search/?q="+safe]
+  ];
+ }
+ if(type==="ip"){
+  if(!/^[0-9a-fA-F:.]+$/.test(q)){
+   r.textContent="Enter a valid-looking IP address.";return;
+  }
+  links=[
+   ["RDAP","https://rdap.org/ip/"+safe],
+   ["IP Information","https://ipinfo.io/"+safe],
+   ["VirusTotal","https://www.virustotal.com/gui/ip-address/"+safe]
+  ];
+ }
+ if(type==="domain"){
+  let d=q.replace(/^https?:\/\//,"").split("/")[0];
+  if(!/^(?=.{1,253}$)([a-z0-9-]+\.)+[a-z]{2,}$/i.test(d)){
+   r.textContent="Enter a valid domain.";return;
+  }
+  links=[
+   ["WHOIS","https://who.is/whois/"+encodeURIComponent(d)],
+   ["DNS Lookup","https://dns.google/query?name="+encodeURIComponent(d)],
+   ["Certificate Search","https://crt.sh/?q="+encodeURIComponent(d)],
+   ["VirusTotal","https://www.virustotal.com/gui/domain/"+encodeURIComponent(d)]
+  ];
+ }
+
+ r.innerHTML="<h3>Public Search Sources</h3>";
+ links.forEach(x=>{
+  let a=document.createElement("a");
+  a.href=x[1];a.target="_blank";a.rel="noopener noreferrer";
+  a.textContent=x[0]+" ↗";
+  a.style="display:inline-block;color:#36d9ed;margin:8px;";
+  r.appendChild(a);
+ });
+}
+</script>
+</body>
+</html>
